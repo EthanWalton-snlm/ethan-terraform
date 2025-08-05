@@ -2,7 +2,11 @@ resource "aws_eks_fargate_profile" "react_fargate" {
   cluster_name           = aws_eks_cluster.eks.name
   fargate_profile_name   = "react-fargate-profile"
   pod_execution_role_arn = aws_iam_role.fargate_pod_execution_role.arn
-  subnet_ids             = aws_subnet.private[*].id
+  subnet_ids = [
+      data.aws_subnet.private1.id,
+      data.aws_subnet.private2.id,
+      data.aws_subnet.private3.id
+    ]
   selector {
     namespace = "default"
   }
